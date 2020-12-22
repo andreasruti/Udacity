@@ -1,5 +1,5 @@
 # Udacity
-Content of Udacity Courses
+This repository contains projects of Udacity Courses.
 
 Courses:
-- ML (Machine Learning with PyTorch): Supervised Learning (project *finding_donors*)
+- ML (Machine Learning with PyTorch): project *finding_donors* (Supervised Learning)
