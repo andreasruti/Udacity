@@ -14281,7 +14281,6 @@ a.anchor-link {
      <div class="CodeMirror cm-s-jupyter">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Imports here</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
 
 <span class="kn">import</span> <span class="nn">torch</span>
 <span class="kn">from</span> <span class="nn">torch</span> <span class="kn">import</span> <span class="n">nn</span><span class="p">,</span> <span class="n">optim</span>
@@ -14494,12 +14493,6 @@ a.anchor-link {
 <span class="n">train_loader</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">DataLoader</span><span class="p">(</span><span class="n">image_datasets</span><span class="p">[</span><span class="s1">&#39;train&#39;</span><span class="p">],</span> <span class="n">batch_size</span> <span class="o">=</span> <span class="mi">64</span><span class="p">,</span> <span class="n">shuffle</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span>
 <span class="n">valid_loader</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">DataLoader</span><span class="p">(</span><span class="n">image_datasets</span><span class="p">[</span><span class="s1">&#39;valid&#39;</span><span class="p">],</span> <span class="n">batch_size</span> <span class="o">=</span> <span class="mi">64</span><span class="p">)</span>
 <span class="n">test_loader</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">DataLoader</span><span class="p">(</span><span class="n">image_datasets</span><span class="p">[</span><span class="s1">&#39;test&#39;</span><span class="p">],</span> <span class="n">batch_size</span> <span class="o">=</span> <span class="mi">64</span><span class="p">)</span>
-
-
-<span class="c1">#subset_indices = [0, 1, 2, 3, 4] # select your indices here as a list</span>
-<span class="c1">#train_loader_sub = torch.utils.data.DataLoader(torch.utils.data.Subset(image_datasets[&#39;train&#39;], subset_indices), batch_size=16, num_workers=2, shuffle=False)</span>
-<span class="c1">#valid_loader_sub = torch.utils.data.DataLoader(torch.utils.data.Subset(image_datasets[&#39;valid&#39;], subset_indices), batch_size=16, num_workers=2, shuffle=False)</span>
-<span class="c1">#test_loader_sub = torch.utils.data.DataLoader(torch.utils.data.Subset(image_datasets[&#39;test&#39;], subset_indices), batch_size=16, num_workers=2, shuffle=False)</span>
 </pre></div>
 
      </div>
@@ -14548,27 +14541,15 @@ GPU Workspaces about Keeping Your Session Active. You'll want to include code fr
 <p><strong>Note for Workspace users:</strong> If your network is over 1 GB when saved as a checkpoint, there might be issues with saving backups in your workspace. Typically this happens with wide dense layers after the convolutional layers. If your saved checkpoint is larger than 1 GB (you can open a terminal and check with <code>ls -lh</code>), you should reduce the size of your hidden layers and train again.</p>
 
 </div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
-<div class="jp-Cell-inputWrapper">
-<div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[10]:</div>
-<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
-     <div class="CodeMirror cm-s-jupyter">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># TODO: Build and train your network</span>
-</pre></div>
-
-     </div>
-</div>
-</div>
-</div>
-
 </div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
 <div class="jp-Cell-inputWrapper">
 <div class="jp-InputArea jp-Cell-inputArea">
 <div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[11]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">## Load a pre-trained network (If you need a starting point, the VGG networks work great and are straightforward to use)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># TODO: Build and train your network</span>
+
+<span class="c1">## Load a pre-trained network (If you need a starting point, the VGG networks work great and are straightforward to use)</span>
 
 <span class="c1"># Use GPU if it&#39;s available</span>
 <span class="n">device</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">device</span><span class="p">(</span><span class="s2">&quot;cuda&quot;</span> <span class="k">if</span> <span class="n">torch</span><span class="o">.</span><span class="n">cuda</span><span class="o">.</span><span class="n">is_available</span><span class="p">()</span> <span class="k">else</span> <span class="s2">&quot;cpu&quot;</span><span class="p">)</span>
