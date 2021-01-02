@@ -1,0 +1,32 @@
+Anaconda Prompt:
+----------------
+>>> cd C:\Users\rutis\OneDrive\Dokumente\Udacity\MachineLearning\NeuralNetworks\aipnd-project-master
+>>> python hello.py Andy
+or 
+>>> python
+>>> import hello
+>>> hello.main(['Andy'])
+>>> quit()
+
+Development in atom:
+--------------------
+- open Terminal by pressing ctrl+shift+P, then select "platformio ide terminal: new"
+- to run, use
+
+https://github.com/MaceTenth/Udacity-image-classifier-project
+
+
+Project: Run train.py
+-----------------------
+>>> cd C:\Users\rutis\OneDrive\Dokumente\Udacity\MachineLearning\NeuralNetworks\aipnd-project-master
+>>> python train.py flowers --save_dir checkpoints --arch vgg13 --learning_rate 0.01 --hidden_units 1000 --epochs 3 (cpu)
+>>> python train.py flowers --save_dir checkpoints --arch vgg13 --learning_rate 0.003 --hidden_units 1000 --epochs 3 --gpu (gpu)
+
+
+Project: Run predict.py
+-----------------------
+>>> cd C:\Users\rutis\OneDrive\Dokumente\Udacity\MachineLearning\NeuralNetworks\aipnd-project-master
+>>> python predict.py flowers/test/100/image_07939.jpg checkpoints/checkpoint.pth --top_k 4 --category_names cat_to_name.json (cpu)
+>>> python predict.py flowers/test/100/image_07939.jpg checkpoints/checkpoint.pth --top_k 4 --category_names cat_to_name.json --gpu (gpu)
+
+
