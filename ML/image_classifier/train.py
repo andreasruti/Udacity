@@ -24,7 +24,7 @@ def get_input_args():
     parser = argparse.ArgumentParser(description='Train model to classify flowers')
     parser.add_argument('data_dir', type=str, help='Directory where image data is stored')
     parser.add_argument('--save_dir', type=str, default='checkpoints', help='Directory where checkpoints will be saved')
-    parser.add_argument('--arch', type=str, default='vgg16', help='Choose architecture (vgg13, vgg16 or vgg19)')
+    parser.add_argument('--arch', type=str, default='vgg16', help='Choose architecture (vgg16 or vgg19)')
     parser.add_argument('--learning_rate', type=float, default=0.001, help='Choose learning rate for model training')
     parser.add_argument('--hidden_units', type=int, default=500, help='Choose number of hidden units in the model')
     parser.add_argument('--epochs', type=int, default=3, help='Choose number of epochs for training the model')
@@ -59,13 +59,34 @@ class Classifier(nn.Module):
 
         return x
 
-#-------------------------------------------------------------------------------
-# get model
-#-------------------------------------------------------------------------------
-
 # get user arguments
 args = get_input_args()
 print(args)
+
+# checks
+if(not(args.learning_rate>0 and args.learning_rate<1)):
+    print("Error: Invalid learning rate")
+    print("Must be between 0 and 1 exclusive")
+    quit()
+
+if(args.epochs<=0):
+    print("Error: Invalid epoch value")
+    print("Must be greater than 0")
+    quit()
+
+if(args.hidden_units<=0):
+    print("Error: Invalid number of hidden units given")
+    print("Must be greater than 0")
+
+if args.arch not in ["vgg16", "vgg19"]:
+    print("Error: invalid architecture name received")
+    print("Type \"python train.py --help\" for more information")
+    quit()
+
+
+#-------------------------------------------------------------------------------
+# get model
+#-------------------------------------------------------------------------------
 
 # load data
 train_loader, valid_loader, test_loader, class_to_idx, image_datasets = utils.get_loaders(data_dir=args.data_dir)
@@ -91,6 +112,10 @@ optimizer = optim.Adam(model.classifier.parameters(), lr = args.learning_rate)
 # actual training
 #-------------------------------------------------------------------------------
 device = torch.device("cuda" if args.gpu else "cpu")
+if device and torch.cuda.is_available():
+    device = torch.device('cuda')
+else:
+    device = torch.device('cpu')
 print(device)
 model.to(device);
 with active_session():
@@ -102,8 +127,10 @@ with active_session():
 #-------------------------------------------------------------------------------
 model.class_to_idx = image_datasets['train'].class_to_idx
 
-checkpoint = {'classifier': model.classifier,
+checkpoint = {'arch': args.arch,
+              'classifier': model.classifier,
               'class_to_idx': model.class_to_idx,
               'state_dict': model.state_dict()}
 
 torch.save(checkpoint, args.save_dir+"/checkpoint.pth")
+print('Checkpoint saved!')

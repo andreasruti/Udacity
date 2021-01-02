@@ -1,3 +1,5 @@
+# this file provides funcitons for train.py and predict.py
+
 # Imports here
 import numpy as np
 
@@ -65,9 +67,8 @@ def load_pretrained_model(arch):
     '''
     Load pretrained model
     '''
-    if arch == 'vgg13':
-        model = models.vgg13(pretrained = True)
-    elif arch == 'vgg16':
+
+    if arch == 'vgg16':
         model = models.vgg16(pretrained = True)
     else: #vgg19
         model = models.vgg19(pretrained = True)

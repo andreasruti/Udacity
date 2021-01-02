@@ -24,9 +24,19 @@ def get_input_args():
     parser.add_argument('checkpoint', type=str, help='Path to checkpoint to be loaded')
     parser.add_argument('--top_k', type=int, default=1, help='Number of top classes to predict')
     parser.add_argument('--category_names', type=str, default='None', help='Path to JSON file for mapping class values to category names')
+    #parser.add_argument('--gpu', type=bool, default=False, help='Set to True to run on GPU')
     parser.add_argument('--gpu', action='store_true', help='To run on GPU')
 
     return parser.parse_args()
+
+args = get_input_args()
+print(args)
+
+# check
+if(args.topk<=1 and args.topk>102):
+    print("Error: Invalid top K value")
+    print("Must be between 1 and 102")
+    quit()
 
 
 #-------------------------------------------------------------------------------
@@ -64,10 +74,10 @@ class Classifier(nn.Module):
 
         # According problem: https://knowledge.udacity.com/questions/237748
         checkpoint = torch.load(filepath, map_location=lambda storage, loc: storage)
+        #print(checkpoint)
 
         # load pre-trained network VGG16
-        model = models.vgg16(pretrained = True)
-        print(model.classifier)
+        model = models.vgg16(pretrained=True) if checkpoint['arch'] == 'vgg16' else models.vgg19(pretrained=True)
 
         # Freeze parameters so we don't backprop through them
         for param in model.parameters():
@@ -84,20 +94,13 @@ class Classifier(nn.Module):
 #-------------------------------------------------------------------------------
 # load checkpoint
 #-------------------------------------------------------------------------------
-
-args = get_input_args()
-print(args)
-
 input_size = 1000
 hidden_size = 100
 output_size = 102
 p_dropout = 0.5
 
-model = utils.load_pretrained_model(arch='vgg16')
-
 x = Classifier()
 model = x.load_checkpoint(args.checkpoint)
-
 
 #-------------------------------------------------------------------------------
 # predict top k classes
@@ -105,6 +108,10 @@ model = x.load_checkpoint(args.checkpoint)
 
 # run prediction
 device = torch.device("cuda" if args.gpu else "cpu")
+if device and torch.cuda.is_available():
+    device = torch.device('cuda')
+else:
+    device = torch.device('cpu')
 print(device)
 probs, classes = utils.predict(device, args.img, model, args.top_k)
 
