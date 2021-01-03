@@ -33,6 +33,31 @@ def get_input_args():
     # Store user options in the "args" variable
     return parser.parse_args()
 
+# get user arguments
+args = get_input_args()
+print(args)
+
+# checks
+if(not(args.learning_rate>0 and args.learning_rate<1)):
+    print("Error: Invalid learning rate")
+    print("Must be between 0 and 1 exclusive")
+    quit()
+
+if(args.epochs<=0):
+    print("Error: Invalid epoch value")
+    print("Must be greater than 0")
+    quit()
+
+if(args.hidden_units<=0):
+    print("Error: Invalid number of hidden units given")
+    print("Must be greater than 0")
+
+if args.arch not in ["vgg16", "vgg19"]:
+    print("Error: invalid architecture name received")
+    print("Type \"python train.py --help\" for more information")
+    quit()
+    
+
 #-------------------------------------------------------------------------------
 # Classifier class
 #-------------------------------------------------------------------------------
@@ -58,30 +83,6 @@ class Classifier(nn.Module):
         x = F.log_softmax(self.fc3(x), dim = 1)
 
         return x
-
-# get user arguments
-args = get_input_args()
-print(args)
-
-# checks
-if(not(args.learning_rate>0 and args.learning_rate<1)):
-    print("Error: Invalid learning rate")
-    print("Must be between 0 and 1 exclusive")
-    quit()
-
-if(args.epochs<=0):
-    print("Error: Invalid epoch value")
-    print("Must be greater than 0")
-    quit()
-
-if(args.hidden_units<=0):
-    print("Error: Invalid number of hidden units given")
-    print("Must be greater than 0")
-
-if args.arch not in ["vgg16", "vgg19"]:
-    print("Error: invalid architecture name received")
-    print("Type \"python train.py --help\" for more information")
-    quit()
 
 
 #-------------------------------------------------------------------------------
